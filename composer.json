@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "backup-manager/backup-manager": "dev-2.0",
+    "backup-manager/backup-manager": "2.0.x-dev",
     "php": ">=5.6",
     "symfony/process": "~3.0",
     "illuminate/support": "~5.2",
