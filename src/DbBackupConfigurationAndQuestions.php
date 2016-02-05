@@ -25,7 +25,20 @@ trait DbBackupConfigurationAndQuestions {
         $this->lineBreak($output);
 
         $compress = $this->confirmation($input, $output, 'Do you want to compress this dump?', false);
+        $this->lineBreak($output);
 
-        return compact('database', 'provider', 'remoteFilePath', 'compress');
+        if ($compress) {
+            $compression = $this->choiceQuestion($input, $output, 'With what?', ['gzip' => 'Gzip'], 'gzip');
+            $this->lineBreak($output);
+        }
+
+        $compressionText = $compress ? "and compress it to [{$compression}]" : "without compression";
+        $confirmation = $this->confirmation($input, $output, "To be sure, you want to backup [{$database}], store it on [{$provider}] at [{$remoteFilePath}], {$compressionText}?");
+        if ($confirmation)
+            return compact('database', 'provider', 'remoteFilePath', 'compress');
+
+        $this->lineBreak($output);
+        $output->writeln('Failed to run backup.');
+        exit;
     }
 }
