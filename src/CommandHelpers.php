@@ -9,10 +9,11 @@ use Symfony\Component\Console\Question\Question;
 
 trait CommandHelpers {
 
-    protected function choiceQuestion($text, array $choices, InputInterface $input, OutputInterface $output) {
+    protected function choiceQuestion(InputInterface $input, OutputInterface $output, $text, array $choices, $default = null) {
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
-        $question = new ChoiceQuestion("<question>{$text}</question>", $choices);
+        $defaultText = $default ? " [{$default}]" : '';
+        $question = new ChoiceQuestion("<question>{$text}{$defaultText}</question>", $choices, $default);
         return $helper->ask($input, $output, $question);
     }
 
@@ -27,7 +28,7 @@ trait CommandHelpers {
         $output->writeln('');
     }
 
-    protected function confirmation($text, $default = false, InputInterface $input, OutputInterface $output) {
+    protected function confirmation(InputInterface $input, OutputInterface $output, $text, $default = false) {
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
         $defaultOption = $default ? '[Y/n]' : '[y/N]';

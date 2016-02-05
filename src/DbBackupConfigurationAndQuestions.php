@@ -13,18 +13,18 @@ trait DbBackupConfigurationAndQuestions {
             ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters');
     }
 
-    protected function askQuestions(InputInterface $input, OutputInterface $output) {
-        $database = $this->choiceQuestion('Which database do you want to dump?', ['master' => 'Master (MySQL)'], $input, $output);
+    protected function askQuestions(InputInterface $input, OutputInterface $output, array $databases, array $filesystems) {
+        $database = $this->choiceQuestion($input, $output, 'Which database do you want to dump?', $databases['connections'], $databases['default']);
         $this->lineBreak($output);
 
-        $provider = $this->choiceQuestion('On which storage provider do you want to store this dump?', ['backups' => 'Backups (AWS S3)'], $input, $output);
+        $provider = $this->choiceQuestion($input, $output, 'On which storage provider do you want to store this dump?', $filesystems['providers'], $filesystems['default']);
         $this->lineBreak($output);
 
         $output->writeln("<question>And what path?</question>");
         $remoteFilePath = $this->askInput($input, $output);
         $this->lineBreak($output);
 
-        $compress = $this->confirmation('Do you want to compress this dump?', false, $input, $output);
+        $compress = $this->confirmation($input, $output, 'Do you want to compress this dump?', false);
 
         return compact('database', 'provider', 'remoteFilePath', 'compress');
     }
