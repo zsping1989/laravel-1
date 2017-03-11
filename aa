@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue翻页应用组件</title>
+    <script type="application/javascript" src="vue.js"></script>
+</head>
+<body>
+<script type="text/x-template" id="paginate">
+    <div>A custom compo  刚刚nent!</div>
+</script>
+<div id="app">
+    <paginate></paginate>
+    {{ msg }}
+</div>
+<script>
+   new Vue({
+        el: '#app',
+       components:{
+            //分页组件
+            'paginate':{
+                //向下传递参数
+                props:{
+                    //分页数据
+                    ftxData:{
+                        type: Object,
+                        required: true,
+                        default: {}
+                    },
+                    //分页配置
+                    ftxConfig:{
+                        type: Object,
+                        default: {}
+                    }
+                },
+                computed:{
+                    //最后一页
+                    lastPage:function () {
+
+                    },
+                    //当前页
+                    nowPage:function () {
+
+                    }
+
+                },
+                //分页模板
+                template:'#paginate',
+                methods:{
+                    //到
+                    toPage:function (page) {
+
+                    }
+
+
+                }
+            }
+       },
+        data:{
+            msg:'ddddddddddddddddddddddd',
+            data:{
+                toatl:100,
+                page_size:10,
+                now_page:1
+            },
+            config:{
+                data_url:'/aa/bb/index'
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
